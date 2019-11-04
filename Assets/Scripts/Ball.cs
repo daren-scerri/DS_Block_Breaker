@@ -8,6 +8,8 @@ public class Ball : MonoBehaviour
     [SerializeField] float xVelocity = 2f;
     [SerializeField] float yVelocity = 15f;
 
+    [SerializeField] AudioClip[] ballsounds; 
+
 
     Vector2 paddleToBallDistance;
 
@@ -16,10 +18,11 @@ public class Ball : MonoBehaviour
     void Start()
     {
         paddleToBallDistance = this.transform.position - mypaddle.transform.position;
+        gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
         if (!hasStarted)
@@ -46,12 +49,30 @@ public class Ball : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             hasStarted = true;
-            this.GetComponent<Rigidbody2D>().velocity = new Vector2(xVelocity, yVelocity);
+            gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
+            this.GetComponent<Rigidbody2D>().velocity = new Vector2(xVelocity + Random.Range(0.0f, 2f) , yVelocity + Random.Range(0.0f,2f));
         }
 
     }
 
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        //  if other.gameObject==
+        if (other.gameObject.tag == "Wall")
+        {
+            AudioClip clip = ballsounds[0];
+            this.GetComponent<AudioSource>().PlayOneShot(clip);
+        }
 
+        if (other.gameObject.name == "Paddle")
+        {
+            AudioClip clip = ballsounds[1];
+            this.GetComponent<AudioSource>().PlayOneShot(clip);
+        }
+
+
+
+    }
 
 
 }

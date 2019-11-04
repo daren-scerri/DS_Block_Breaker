@@ -6,6 +6,7 @@ public class Block : MonoBehaviour
 {
 
     [SerializeField] int hitCount = 1;
+    [SerializeField] AudioClip breakSound;
 
 
     // Start is called before the first frame update
@@ -22,9 +23,14 @@ public class Block : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other)
     {
+     //   this.gameObject.GetComponent<AudioSource>().Play();
         hitCount--;
         Debug.Log("Block Destroyed");
-        if (hitCount<=0) Destroy(this.gameObject);
+        if (hitCount <= 0)
+        {
+            AudioSource.PlayClipAtPoint(breakSound, Camera.main.transform.position);
+            Destroy(this.gameObject);
+        }
 
     }
 }

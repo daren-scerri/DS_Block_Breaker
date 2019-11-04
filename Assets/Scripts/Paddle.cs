@@ -31,4 +31,11 @@ public class Paddle : MonoBehaviour
         //transform.position = Camera.main.ScreenToViewportPoint(new Vector3(xPoint,0,0)) -new Vector3 (0,-1,Camera.main.transform.position.z);
 
     }
+
+ //   void OnCollisionEnter2D(Collision2D other)
+ //   {
+      //  if other.gameObject==
+ //       this.GetComponent<AudioSource>().Play();
+
+//    }
 }
